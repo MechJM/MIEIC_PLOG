@@ -18,5 +18,6 @@ parent("Michael Scofield","Ella Scofield").
 parent("Sara Tancredi","Ella Scofield").
 
 /* Queries
-1. parent(X,"Michael Scofield").
-2. parent("Aldo Burrows",Y).
+a) parent(X,"Michael Scofield").
+b) parent("Aldo Burrows",Y).
+*/
