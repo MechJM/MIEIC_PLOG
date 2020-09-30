@@ -7,9 +7,9 @@ pilot(jones).
 pilot(bonhomme).
 
 team(lamb,breitling).
-team(besenyei,"Red Bull").
-team(chambliss,"Red Bull").
-team(maclean,"Mediterranean Racing Team").
+team(besenyei,'Red Bull').
+team(chambliss,'Red Bull').
+team(maclean,'Mediterranean Racing Team').
 team(mangold,cobra).
 team(jones,matador).
 team(bonhomme,matador).
