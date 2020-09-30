@@ -19,4 +19,5 @@ gosta_de(Elem1,Elem2) :-
     passaro(Elem2).
 
 gosta_de(Amigo1,Amigo2) :-
-    amigo(Amigo1,Amigo2)
+    amigo(Amigo1,Amigo2);
+    amigo(Amigo2,Amigo1).
