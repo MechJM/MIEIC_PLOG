@@ -1,3 +1,5 @@
+%:- include('ex3.pl').
+
 % a)
 membro(X,[X|[]]).
 
@@ -6,10 +8,8 @@ membro(X,[H|Resto]) :-
     membro(X,Resto).
 
 % d)
-membron(Elem,[H|T],N) :-
+membron([X|_],1,X).
+
+membron([_|T],N,Elem) :-
     N1 is (N - 1),
-    (
-        N1 = 0,
-        Elem = H
-    );
-    membron(Elem,T,N1).
+    membron(T,N1,Elem).
