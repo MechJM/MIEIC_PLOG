@@ -96,6 +96,7 @@ bestParticipant(P1, P2, P) :-
     (P1Sum > P2Sum, P = P1; P = P2).
 
 % ex5
+
 getPerfInfo([],[]).
 
 getPerfInfo([H|T],[CurrentElem|OtherElems]) :-
@@ -116,4 +117,57 @@ allPerfs :-
     getPerfInfo(IDs,Infos),
     printInfo(Infos).
 
+% ex6
+allEqualTo([H|[]],H).
 
+allEqualTo([H|[H|T]],H) :- allEqualTo([H|T],H).
+
+countSuccessful([],0).
+
+countSuccessful([H|T],Result) :-
+    allEqualTo(H,120),
+    countSuccessful(T,SubRes),
+    Result is 1 + SubRes.
+
+countSuccessful([_|T],Result) :- countSuccessful(T,Result).
+
+getPerfTimes([],[]).
+
+getPerfTimes([H|T],[CurrentElem|OtherElems]) :-
+    performance(H,CurrentElem),
+    getPerfTimes(T,OtherElems).
+
+nSuccessfulParticipants(T) :-
+    getAllPerformanceIDs(IDs),
+    getPerfTimes(IDs,Times),
+    countSuccessful(Times,T).
+    
+% ex7
+
+calcIndexes([],_,[]).
+
+calcIndexes([120|T],CurrentIndex,[CurrentIndex|OtherElems]) :-
+    NextIndex is CurrentIndex + 1,
+    calcIndexes(T,NextIndex,OtherElems).
+
+calcIndexes([_|T],CurrentIndex,Result) :-
+    NextIndex is CurrentIndex + 1,
+    calcIndexes(T,NextIndex,Result).
+
+calcAllIndexes([],[]).
+
+calcAllIndexes([H|T],[CurrentElem|OtherElems]) :-
+    calcIndexes(H,1,CurrentElem),
+    calcAllIndexes(T,OtherElems).
+
+generateFansList([],[],[]).
+
+generateFansList([ID|OtherIDs], [Indexes|OtherIndexes], [CurrentElem|OtherElems]) :-
+    CurrentElem = ID-Indexes,
+    generateFansList(OtherIDs,OtherIndexes,OtherElems).
+
+juriFans(JuriFansList) :-
+    getAllPerformanceIDs(IDs),
+    getPerfTimes(IDs,Times),
+    calcAllIndexes(Times,Indexes),
+    generateFansList(IDs,Indexes,JuriFansList).
