@@ -171,3 +171,51 @@ juriFans(JuriFansList) :-
     getPerfTimes(IDs,Times),
     calcAllIndexes(Times,Indexes),
     generateFansList(IDs,Indexes,JuriFansList).
+
+% ex8
+
+:- use_module(library(lists)).
+
+eligibleOutcome(Id,Perf,TT) :-
+    performance(Id,Times),
+    madeItThrough(Id),
+    participant(Id,_,Perf),
+    sumlist(Times,TT).
+
+collectEligibleOutcomes(OutList) :- 
+    findall([TT,Id,Perf],eligibleOutcome(Id,Perf,TT),OutList).
+
+removeDups([],[]).
+
+removeDups([H|[H|T]],[H|OtherElems]) :- removeDups(T,OtherElems).
+
+removeDups([H|T],[H|OtherElems]) :- removeDups(T,OtherElems).
+
+nextPhase(N, Participants) :-
+    collectEligibleOutcomes(Outcomes),
+    removeDups(Outcomes,Participants).
+
+% ex9
+
+predX(Q,[R|Rs],[P|Ps]) :-
+    participant(R,I,P), I=<Q, !,
+    predX(Q,Rs,Ps).
+predX(Q,[R|Rs],Ps) :-
+    participant(R,I,_), I>Q,
+    predX(Q,Rs,Ps).
+predX(_,[],[]).
+
+predX1(Q,[R|Rs],[P|Ps]) :-
+    participant(R,I,P), I=<Q, 
+    predX1(Q,Rs,Ps).
+predX1(Q,[R|Rs],Ps) :-
+    participant(R,I,_), I>Q,
+    predX1(Q,Rs,Ps).
+predX1(_,[],[]).
+
+/*
+O predicado recebe um valor inteiro e um conjunto de IDs e percorre a lista de IDs, adicionando a uma lista que devolverá no fim os nomes das performances dos participantes cuja idade seja menor ou igual ao valor inteiro passado. O cut é verde visto que o comportamento visível do programa não muda se este for removido, apenas aumenta a eficiência do predicado evitando backtracking desnecessário.
+*/
+
+% ex10
+
