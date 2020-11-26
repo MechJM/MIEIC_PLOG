@@ -9,7 +9,7 @@ player('Johnny','A Player',16).
 game('5 ATG',[action,adventure,open-world,multiplayer],18).
 game('Carrier Shift: Game Over',[action,fps,multiplayer,shooter],16).
 game('Duas Botas',[action,free,strategy,moba],12).
-
+:- dynamic played/4.
 %played(Player,Game,HoursPlayed,PercentUnlocked).
 played('Best Player Ever','5 ATG',3,83).
 played('Worst Player Ever','5 ATG',52,9).
