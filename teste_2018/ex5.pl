@@ -22,6 +22,7 @@ calcTimeDiff(Time1,Time2,Diff) :-
 arePairable(Flight1, Flight2) :-
     flight(Flight1,_,Dest1,_,_,_),
     flight(Flight2,Orig,_,Time2,_,_),
+    Dest1 = Orig,
     arrivalTime(Flight1,Time1),
     calcTimeDiff(Time1,Time2,Diff),
     Diff >= 30, Diff =< 90,!.
@@ -30,35 +31,34 @@ copyList([],[]).
 
 copyList([H|T],[H|Others]) :- copyList(T,Others).
 
-findPairsForOneFlight(_,[],[]).
 
-findPairsForOneFlight(Flight,[H|T],[[Flight,H]|Others]) :-
+findMatchesForAFlight(_,[],[]).
+
+findMatchesForAFlight(Flight,[H|T],[Elem|Others]) :-
+    Flight \= H,
     arePairable(Flight,H),
-    findPairsForOneFlight(Flight,T,Others).
+    Elem = [Flight,H],
+    findMatchesForAFlight(Flight,T,Others).
 
-findPairsForOneFlight(Flight,[_|T],Res) :-
-    findPairsForOneFlight(Flight,T,Res).
+findMatchesForAFlight(Flight,[_|T],Res) :-
+    findMatchesForAFlight(Flight,T,Res).
 
-findPairs([],[]).
+findPairs([],Res,Res).
 
-findPairs([H|T],Copy,Res) :-
-    findPairsForOneFlight(H,Copy,Pairs),
-    append(Res,Pairs,NextRes),
-    findPairs(T,Copy,NextRes).
+findPairs([H|T],Res,Out) :-
+    findMatchesForAFlight(H,T,CurrentPairs),
+    append(Res,CurrentPairs,SubRes),
+    findPairs(T,SubRes,Out).
 
-printPairs([H|[]]) :-
-    H = [F1|[F2]],
-    flight(F1,_,Dest,_,_,_),
-    write(Dest),
-    write(' - '),
-    write(F1),
-    write(' \\ '),
-    write(F2).
+printPairs([]).
+
+printPairs([[]|T]) :-
+    printPairs(T).
 
 printPairs([H|T]) :-
     H = [F1|[F2]],
-    flight(F1,_,Dest,_,_,_),
-    write(Dest),
+    flight(F1,_,Place,_,_,_),
+    write(Place),
     write(' - '),
     write(F1),
     write(' \\ '),
@@ -67,5 +67,5 @@ printPairs([H|T]) :-
 
 pairableFlights :-
     findall(Flight,flight(Flight,_,_,_,_,_),Flights),
-    findPairs(Flights,Pairs),
+    findPairs(Flights,[],Pairs),
     printPairs(Pairs).
