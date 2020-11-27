@@ -11,10 +11,21 @@ myfindall(_,_,[Elem|Others]) :-
 
 myfindall(_,_,[]).
 
-getCountries([H|T],AuxList,OutList) :-
-    H = [Orig|[Dest]],
-    airport(_,Orig,CountryOrig),
+operates(Company,Country) :-
+    company(Company,_,_,_),
+    flight(_,Orig,Dest,_,_,Company),
+    (airport(_,Orig,Country); airport(_,Dest,Country)).
+
+removeDups([],[]).
+
+removeDups([H|T],[H|Others]) :-
+    \+ (member(H,T)),
+    removeDups(T,Others).
+
+removeDups([_|T],Res) :-
+    removeDups(T,Res).
 
 countries(Company, ListOfCountries) :-
-    myfindall([Orig,Dest],flight(_,Orig,Dest,_,_,Company),CountryPairs),
+    myfindall(Country,operates(Company,Country),Countries),
+    removeDups(Countries,ListOfCountries),!.
 
