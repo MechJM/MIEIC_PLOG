@@ -96,8 +96,7 @@ getDiags(List,N,[D1, D2]) :-
 constraintListSum([],_).
 
 constraintListSum([H|T],Sum) :-
-    sumlist(H,CurrentSum),
-    CurrentSum #= Sum,
+    sum(H,#=,Sum),
     constraintListSum(T,Sum).
 
 
@@ -109,13 +108,9 @@ magic(N, Vars) :-
     % Calc sum
     all_distinct(Vars),
     getRows(Vars,1,N,Rows),
-    once(write('Im here\n')),
     constraintListSum(Rows,Sum),
-    once(write('Im here2\n')),
     getCols(Vars,1,N,Cols),
-    once(write('Im here3\n')),
     constraintListSum(Cols,Sum),
-    once(write('Im here4\n')),
     getDiags(Vars,N,Diags),
     constraintListSum(Diags,Sum),
     % Remove simmetry
