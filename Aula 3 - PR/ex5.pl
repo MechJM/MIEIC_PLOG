@@ -1,14 +1,14 @@
 :- use_module(library(clpfd)).
 
-task(maria, compras, 4.5).
-task(maria, cozinha, 7.8).
-task(maria, lavagem, 3.6).
-task(maria, limpeza, 2.9).
+task(maria, compras, 45).
+task(maria, cozinha, 78).
+task(maria, lavagem, 36).
+task(maria, limpeza, 29).
 
-task(joao, compras, 4.9).
-task(joao, cozinha, 7.2).
-task(joao, lavagem, 4.3).
-task(joao, limpeza, 3.1).
+task(joao, compras, 49).
+task(joao, cozinha, 72).
+task(joao, lavagem, 43).
+task(joao, limpeza, 31).
 
 index(maria, 1).
 index(joao, 2).
