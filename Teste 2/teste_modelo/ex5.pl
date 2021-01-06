@@ -5,9 +5,9 @@
 
 getSumElems(_, _, [], _, []).
 
-getSumElems(Index, Prateleiras, [Prancha|Pranchas], WantedIndex, [Elem|Others]) :-
+getSumElems(Index, Prateleiras, [Prancha|Pranchas], WantedIndex, Result) :-
     (Prancha #= WantedIndex,
-    nth1(Index, Prateleiras, Elem), NextResult = Others; NextResult = [Elem|Others]),
+    element(Index, Prateleiras, Elem), Result = [Elem|Others], NextResult = Others; NextResult = Result),
     Index1 is Index + 1,
     getSumElems(Index1, Prateleiras, Pranchas, WantedIndex, NextResult).
 
@@ -18,8 +18,7 @@ iterPranchas(Index, [Prancha|Pranchas], Prateleiras, PranchasSelecionadas) :-
     once(write(Prancha)),once(nl),
     once(write(Elems)),once(nl),
     once(write(Index)),once(nl),
-    sumlist(Elems, Sum),
-    Sum #=< Prancha,
+    sum(Elems, #=<, Prancha),
     Index1 is Index + 1,
     iterPranchas(Index1, Pranchas, Prateleiras, PranchasSelecionadas).
 
