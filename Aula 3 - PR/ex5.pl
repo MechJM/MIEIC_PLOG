@@ -15,9 +15,10 @@ index(joao, 2).
 
 countOccur([],_,0).
 
-countOccur([H|T],H,Count) :-
+countOccur([H|T],Elem,Count) :-
+    H #= Elem,
     countOccur(T, H, SubCount),
-    Count #= 1 + SubCount.
+    Count is 1 + SubCount.
 
 countOccur([_|T],Elem, Count) :-
     countOccur(T,Elem,Count).
@@ -37,4 +38,4 @@ tasks(Tasks, Vars) :-
     countOccur(Vars, 1, 2),
     countOccur(Vars, 2, 2),
     calcTime(Vars, Tasks, TotalTime),
-    minimize(labeling([],Vars),TotalTime).
+    labeling([minimize(TotalTime)],Vars).
