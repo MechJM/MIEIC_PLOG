@@ -4,8 +4,8 @@
 calcCustoEmb([], _, _, 0, 0).
 
 calcCustoEmb([Obj|Objs], CustoObjeto, EmbObjeto, Custo, EmbsUsadas) :-
-    nth1(Obj, CustoObjeto, CurrCusto),
-    nth1(Obj, EmbObjeto, CurrEmb),
+    element(Obj, CustoObjeto, CurrCusto),
+    element(Obj, EmbObjeto, CurrEmb),
     calcCustoEmb(Objs, CustoObjeto, EmbObjeto, SubCusto, SubEmb),
     Custo #= SubCusto + CurrCusto,
     EmbsUsadas #= SubEmb + CurrEmb.
